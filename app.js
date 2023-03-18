@@ -51,4 +51,5 @@ function checkWin() {
   for (let i = 0; i < rows.length; i++) {
     const [a, b, c] = rows[i];
     if (squares[a].textContent !== "" && squares[a].textContent === squares[b].textContent && squares[a].textContent === squares[c].textContent) {
-     
+        
+    }
