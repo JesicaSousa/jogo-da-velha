@@ -1,21 +1,22 @@
-// Variáveis globais
-var board = ['', '', '', '', '', '', '', '', ''];
-var currentPlayer = 'X';
-var winner = null;
-var score = {
-  X: 0,
-  O: 0,
-  draw: 0
-};
+// Definindo as variáveis
+let currentPlayer = "X";
+let gameStatus = "";
+let numMoves = 0;
 
-// Função que alterna o jogador atual
-function togglePlayer() {
-  currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+// Capturando os elementos HTML do jogo
+const statusDisplay = document.querySelector(".game-status");
+const resetButton = document.querySelector(".game-reset");
+const cellElements = document.querySelectorAll(".cell");
+
+// Função para alternar o jogador atual
+function changePlayer() {
+  currentPlayer = currentPlayer === "X" ? "O" : "X";
+  statusDisplay.innerHTML = currentPlayer + " é a sua vez";
 }
 
-// Função que verifica se há um vencedor
+// Função para verificar se há um vencedor
 function checkWinner() {
-  const winConditions = [
+  const winningMoves = [
     [0, 1, 2],
     [3, 4, 5],
     [6, 7, 8],
@@ -26,81 +27,64 @@ function checkWinner() {
     [2, 4, 6]
   ];
 
-  for (let condition of winConditions) {
-    const [a, b, c] = condition;
-    if (board[a] !== '' && board[a] === board[b] && board[b] === board[c]) {
-      winner = board[a];
+  // Verificando se alguma combinação de movimentos venceu
+  for (let i = 0; i < winningMoves.length; i++) {
+    const [a, b, c] = winningMoves[i];
+    if (
+      cellElements[a].innerHTML === currentPlayer &&
+      cellElements[b].innerHTML === currentPlayer &&
+      cellElements[c].innerHTML === currentPlayer
+    ) {
       return true;
     }
   }
 
-  if (board.includes('')) {
-    return false;
-  } else {
-    winner = 'draw';
-    return true;
-  }
+  return false;
 }
 
-// Função que atualiza o tabuleiro
-function updateBoard() {
-  for (let i = 0; i < board.length; i++) {
-    document.getElementById(`cell-${i}`).textContent = board[i];
-  }
+// Função para reiniciar o jogo
+function resetGame() {
+  currentPlayer = "X";
+  gameStatus = "";
+  numMoves = 0;
+  statusDisplay.innerHTML = currentPlayer + " é a sua vez";
+  cellElements.forEach(cell => {
+    cell.innerHTML = "";
+  });
 }
 
-// Função que atualiza o placar
-function updateScore() {
-  document.getElementById('x-score').textContent = score.X;
-  document.getElementById('o-score').textContent = score.O;
-  document.getElementById('draw-score').textContent = score.draw;
-}
-
-// Função que inicia um novo jogo
-function newGame() {
-  board = ['', '', '', '', '', '', '', '', ''];
-  currentPlayer = 'X';
-  winner = null;
-  updateBoard();
-  document.getElementById('message').textContent = 'Jogador X começa';
-}
-
-// Função que manipula o evento de clique nas células
+// Função que será chamada quando uma célula for clicada
 function cellClickHandler(event) {
-  const cellIndex = event.target.dataset.index;
+  const cell = event.target;
 
-  if (board[cellIndex] !== '' || winner !== null) {
+  // Verificando se a célula já foi marcada
+  if (cell.innerHTML !== "") {
     return;
   }
 
-  board[cellIndex] = currentPlayer;
-  updateBoard();
+  cell.innerHTML = currentPlayer;
+  numMoves++;
 
+  // Verificando se houve um vencedor ou empate
   if (checkWinner()) {
-    if (winner === 'draw') {
-      document.getElementById('message').textContent = 'Empate!';
-      score.draw++;
-    } else {
-      document.getElementById('message').textContent = `Jogador ${winner} ganhou!`;
-      score[winner]++;
-    }
-
-    updateScore();
+    gameStatus = currentPlayer + " venceu!";
+  } else if (numMoves === 9) {
+    gameStatus = "Empate!";
   } else {
-    togglePlayer();
-    document.getElementById('message').textContent = `Jogador ${currentPlayer} é a sua vez`;
+    changePlayer();
   }
+
+  // Atualizando o status do jogo
+  statusDisplay.innerHTML = gameStatus;
 }
 
-// Event listeners
-document.querySelectorAll('.cell').forEach(cell => {
-  cell.addEventListener('click', cellClickHandler);
+// Adicionando o evento de clique para cada célula
+cellElements.forEach(cell => {
+  cell.addEventListener("click", cellClickHandler);
 });
 
-document.getElementById('new-game').addEventListener('click', newGame);
-
-// Inicialização do jogo
-newGame();
+// Adicionando o evento de clique para o botão de reset
+resetButton.addEventListener("click", resetGame);
 
 
  
