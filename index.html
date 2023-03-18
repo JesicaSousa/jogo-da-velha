@@ -1,90 +1,114 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Jogo da Velha</title>
-    <style>
-      body {
-        background-color: #fcf6e3;
-        font-family: Arial, sans-serif;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-      }
+<html>
+<head>
+	<title>Jogo da Velha</title>
+	<style>
+		body {
+			background-color: #F7D9E3;
+			font-family: Arial, sans-serif;
+			text-align: center;
+		}
 
-      .game-container {
-        border-radius: 10px;
-        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
-        display: flex;
-        flex-wrap: wrap;
-        max-width: 400px;
-        width: 100%;
-      }
+		h1 {
+			color: #555;
+			margin-top: 50px;
+		}
 
-      .square {
-        background-color: #fff;
-        border: 1px solid #ccc;
-        flex-basis: calc(33.333% - 2px);
-        height: 120px;
-        margin: 1px;
-        position: relative;
-        cursor: pointer;
-      }
+		.container {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			flex-direction: column;
+			margin-top: 50px;
+		}
 
-      .square:hover {
-        background-color: #f7f7f7;
-      }
+		.board {
+			border: 2px solid #555;
+			display: grid;
+			grid-template-columns: repeat(3, 1fr);
+			grid-template-rows: repeat(3, 1fr);
+			grid-gap: 5px;
+			padding: 5px;
+			margin-bottom: 20px;
+		}
 
-      .square.x::after {
-        content: "X";
-        font-size: 80px;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        color: #ff2e63;
-      }
+		.square {
+			background-color: #fff;
+			color: #555;
+			font-size: 60px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			cursor: pointer;
+		}
 
-      .square.o::after {
-        content: "O";
-        font-size: 80px;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        color: #536dfe;
-      }
+		.square:hover {
+			background-color: #eee;
+		}
 
-      .scoreboard {
-        margin-top: 20px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        font-size: 24px;
-      }
-    </style>
-  </head>
+		.x {
+			color: #F06292;
+		}
 
-  <body>
-    <div class="game-container" id="new-game">
-      <div class="square" data-cell="0"></div>
-      <div class="square" data-cell="1"></div>
-      <div class="square" data-cell="2"></div>
-      <div class="square" data-cell="3"></div>
-      <div class="square" data-cell="4"></div>
-      <div class="square" data-cell="5"></div>
-      <div class="square" data-cell="6"></div>
-      <div class="square" data-cell="7"></div>
-      <div class="square" data-cell="8"></div>
-    </div>
+		.o {
+			color: #64B5F6;
+		}
 
-    <div class="scoreboard">
-      <span>Player X: <span id="player-x-score">0</span></span>
-      <span>Player O: <span id="player-o-score">0</span></span>
-    </div>
+		.btn {
+			background-color: #555;
+			color: #fff;
+			padding: 10px 20px;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+		}
 
-    <script src="app.js"></script>
-  </body>
+		.btn:hover {
+			background-color: #333;
+		}
+
+		.score {
+			display: flex;
+			flex-direction: row;
+			justify-content: center;
+			align-items: center;
+			margin-bottom: 20px;
+		}
+
+		.score span {
+			font-size: 24px;
+			font-weight: bold;
+			margin-right: 10px;
+		}
+
+		.score p {
+			font-size: 18px;
+			margin: 0;
+		}
+	</style>
+</head>
+<body>
+	<h1>Jogo da Velha</h1>
+	<div class="container">
+		<div class="board">
+			<div class="square" id="0"></div>
+			<div class="square" id="1"></div>
+			<div class="square" id="2"></div>
+			<div class="square" id="3"></div>
+			<div class="square" id="4"></div>
+			<div class="square" id="5"></div>
+			<div class="square" id="6"></div>
+			<div class="square" id="7"></div>
+			<div class="square" id="8"></div>
+		</div>
+		<div class="score">
+			<span>Placar:</span>
+			<p id="player-score">0</p>
+			<span>x</span>
+			<p id="computer-score">0</p>
+		</div>
+		<button class="btn" id="new-game">Novo Jogo</button>
+	</div>
+	<script src="app.js"></script>
+</body>
 </html>
