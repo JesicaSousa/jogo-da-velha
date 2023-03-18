@@ -1,8 +1,8 @@
 // Variáveis globais
-let board = ['', '', '', '', '', '', '', '', ''];
-let currentPlayer = 'X';
-let winner = null;
-let score = {
+var board = ['', '', '', '', '', '', '', '', ''];
+var currentPlayer = 'X';
+var winner = null;
+var score = {
   X: 0,
   O: 0,
   draw: 0
