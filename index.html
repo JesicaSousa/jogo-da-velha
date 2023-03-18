@@ -1,30 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Jogo da Velha</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <h1>Jogo da Velha</h1>
-  <table>
-    <tr>
-      <td class="square"></td>
-      <td class="square"></td>
-      <td class="square"></td>
-    </tr>
-    <tr>
-      <td class="square"></td>
-      <td class="square"></td>
-      <td class="square"></td>
-    </tr>
-    <tr>
-      <td class="square"></td>
-      <td class="square"></td>
-      <td class="square"></td>
-    </tr>
-  </table>
-  <div id="score">Score: <span id="userScore">0</span></div>
-  <script src="app.js"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jogo da Velha</title>
+    <style>
+      body {
+        background-color: #fcf6e3;
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+      .game-container {
+        border-radius: 10px;
+        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+        display: flex;
+        flex-wrap: wrap;
+        max-width: 400px;
+        width: 100%;
+      }
+
+      .square {
+        background-color: #fff;
+        border: 1px solid #ccc;
+        flex-basis: calc(33.333% - 2px);
+        height: 120px;
+        margin: 1px;
+        position: relative;
+        cursor: pointer;
+      }
+
+      .square:hover {
+        background-color: #f7f7f7;
+      }
+
+      .square.x::after {
+        content: "X";
+        font-size: 80px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: #ff2e63;
+      }
+
+      .square.o::after {
+        content: "O";
+        font-size: 80px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: #536dfe;
+      }
+
+      .scoreboard {
+        margin-top: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 24px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="game-container">
+      <div class="square" data-cell="0"></div>
+      <div class="square" data-cell="1"></div>
+      <div class="square" data-cell="2"></div>
+      <div class="square" data-cell="3"></div>
+      <div class="square" data-cell="4"></div>
+      <div class="square" data-cell="5"></div>
+      <div class="square" data-cell="6"></div>
+      <div class="square" data-cell="7"></div>
+      <div class="square" data-cell="8"></div>
+    </div>
+
+    <div class="scoreboard">
+      <span>Player X: <span id="player-x-score">0</span></span>
+      <span>Player O: <span id="player-o-score">0</span></span>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
 </html>

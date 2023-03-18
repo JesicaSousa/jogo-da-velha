@@ -1,83 +1,106 @@
 // Variáveis globais
-const players = ['X', 'O'];
-let currentPlayer = players[0];
-let gameStatus = ['', '', '', '', '', '', '', '', ''];
-let scores = [0, 0];
-const winningCombos = [
-  [0, 1, 2], [3, 4, 5], [6, 7, 8],
-  [0, 3, 6], [1, 4, 7], [2, 5, 8],
-  [0, 4, 8], [2, 4, 6]
-];
+let board = ['', '', '', '', '', '', '', '', ''];
+let currentPlayer = 'X';
+let winner = null;
+let score = {
+  X: 0,
+  O: 0,
+  draw: 0
+};
 
-// Selecionando elementos da DOM
-const squares = document.querySelectorAll('.square');
-const message = document.querySelector('.message');
-const player1Score = document.querySelector('.player1-score');
-const player2Score = document.querySelector('.player2-score');
+// Função que alterna o jogador atual
+function togglePlayer() {
+  currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+}
 
-// Funções
-function checkWin() {
-  for (let i = 0; i < winningCombos.length; i++) {
-    const [a, b, c] = winningCombos[i];
-    if (gameStatus[a] && gameStatus[a] === gameStatus[b] && gameStatus[a] === gameStatus[c]) {
+// Função que verifica se há um vencedor
+function checkWinner() {
+  const winConditions = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6]
+  ];
+
+  for (let condition of winConditions) {
+    const [a, b, c] = condition;
+    if (board[a] !== '' && board[a] === board[b] && board[b] === board[c]) {
+      winner = board[a];
       return true;
     }
   }
-  return false;
-}
 
-function checkTie() {
-  return !gameStatus.includes('');
-}
-
-function resetGame() {
-  gameStatus = ['', '', '', '', '', '', '', '', ''];
-  currentPlayer = players[0];
-  message.textContent = `It's ${currentPlayer}'s turn`;
-  for (let i = 0; i < squares.length; i++) {
-    squares[i].textContent = '';
+  if (board.includes('')) {
+    return false;
+  } else {
+    winner = 'draw';
+    return true;
   }
 }
 
-function updateScore(winner) {
-  if (winner === players[0]) {
-    scores[0]++;
-    player1Score.textContent = scores[0];
-  } else if (winner === players[1]) {
-    scores[1]++;
-    player2Score.textContent = scores[1];
+// Função que atualiza o tabuleiro
+function updateBoard() {
+  for (let i = 0; i < board.length; i++) {
+    document.getElementById(`cell-${i}`).textContent = board[i];
   }
 }
 
-function handleClick(e) {
-  const squareIndex = parseInt(e.target.dataset.index);
-  if (gameStatus[squareIndex] !== '') {
+// Função que atualiza o placar
+function updateScore() {
+  document.getElementById('x-score').textContent = score.X;
+  document.getElementById('o-score').textContent = score.O;
+  document.getElementById('draw-score').textContent = score.draw;
+}
+
+// Função que inicia um novo jogo
+function newGame() {
+  board = ['', '', '', '', '', '', '', '', ''];
+  currentPlayer = 'X';
+  winner = null;
+  updateBoard();
+  document.getElementById('message').textContent = 'Jogador X começa';
+}
+
+// Função que manipula o evento de clique nas células
+function cellClickHandler(event) {
+  const cellIndex = event.target.dataset.index;
+
+  if (board[cellIndex] !== '' || winner !== null) {
     return;
   }
-  gameStatus[squareIndex] = currentPlayer;
-  e.target.textContent = currentPlayer;
-  if (checkWin()) {
-    updateScore(currentPlayer);
-    message.textContent = `${currentPlayer} wins!`;
-    setTimeout(resetGame, 1500);
-    return;
+
+  board[cellIndex] = currentPlayer;
+  updateBoard();
+
+  if (checkWinner()) {
+    if (winner === 'draw') {
+      document.getElementById('message').textContent = 'Empate!';
+      score.draw++;
+    } else {
+      document.getElementById('message').textContent = `Jogador ${winner} ganhou!`;
+      score[winner]++;
+    }
+
+    updateScore();
+  } else {
+    togglePlayer();
+    document.getElementById('message').textContent = `Jogador ${currentPlayer} é a sua vez`;
   }
-  if (checkTie()) {
-    message.textContent = "It's a tie!";
-    setTimeout(resetGame, 1500);
-    return;
-  }
-  currentPlayer = currentPlayer === players[0] ? players[1] : players[0];
-  message.textContent = `It's ${currentPlayer}'s turn`;
 }
 
 // Event listeners
-for (let i = 0; i < squares.length; i++) {
-  squares[i].addEventListener('click', handleClick);
-}
+document.querySelectorAll('.cell').forEach(cell => {
+  cell.addEventListener('click', cellClickHandler);
+});
 
-// Reiniciando o jogo
-const restartButton = document.querySelector('.restart-button');
-restartButton.addEventListener('click', resetGame);
+document.getElementById('new-game').addEventListener('click', newGame);
+
+// Inicialização do jogo
+newGame();
+
 
  
