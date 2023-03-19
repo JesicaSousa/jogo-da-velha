@@ -1,90 +1,75 @@
-// Definindo as variáveis
-let currentPlayer = "X";
-let gameStatus = "";
-let numMoves = 0;
+let board = [  [' ', ' ', ' '],
+  [' ', ' ', ' '],
+  [' ', ' ', ' ']
+];
 
-// Capturando os elementos HTML do jogo
-const statusDisplay = document.querySelector(".game-status");
-const resetButton = document.querySelector(".game-reset");
-const cellElements = document.querySelectorAll(".cell");
+let player = 'X';
+let gameOver = false;
 
-// Função para alternar o jogador atual
-function changePlayer() {
-  currentPlayer = currentPlayer === "X" ? "O" : "X";
-  statusDisplay.innerHTML = currentPlayer + " é a sua vez";
+function displayBoard() {
+  console.log(board[0][0] + '|' + board[0][1] + '|' + board[0][2]);
+  console.log('-+-+-');
+  console.log(board[1][0] + '|' + board[1][1] + '|' + board[1][2]);
+  console.log('-+-+-');
+  console.log(board[2][0] + '|' + board[2][1] + '|' + board[2][2]);
 }
 
-// Função para verificar se há um vencedor
-function checkWinner() {
-  const winningMoves = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6]
-  ];
-
-  // Verificando se alguma combinação de movimentos venceu
-  for (let i = 0; i < winningMoves.length; i++) {
-    const [a, b, c] = winningMoves[i];
-    if (
-      cellElements[a].innerHTML === currentPlayer &&
-      cellElements[b].innerHTML === currentPlayer &&
-      cellElements[c].innerHTML === currentPlayer
-    ) {
+function checkWin() {
+  for (let i = 0; i < 3; i++) {
+    if (board[i][0] !== ' ' && board[i][0] === board[i][1] && board[i][1] === board[i][2]) {
       return true;
     }
+  }
+
+  for (let j = 0; j < 3; j++) {
+    if (board[0][j] !== ' ' && board[0][j] === board[1][j] && board[1][j] === board[2][j]) {
+      return true;
+    }
+  }
+
+  if (board[0][0] !== ' ' && board[0][0] === board[1][1] && board[1][1] === board[2][2]) {
+    return true;
+  }
+
+  if (board[0][2] !== ' ' && board[0][2] === board[1][1] && board[1][1] === board[2][0]) {
+    return true;
   }
 
   return false;
 }
 
-// Função para reiniciar o jogo
-function resetGame() {
-  currentPlayer = "X";
-  gameStatus = "";
-  numMoves = 0;
-  statusDisplay.innerHTML = currentPlayer + " é a sua vez";
-  cellElements.forEach(cell => {
-    cell.innerHTML = "";
-  });
+function switchPlayer() {
+  player = player === 'X' ? 'O' : 'X';
 }
 
-// Função que será chamada quando uma célula for clicada
-function cellClickHandler(event) {
-  const cell = event.target;
+while (!gameOver) {
+  console.clear();
+  displayBoard();
+  console.log(`É a vez do jogador ${player}.`)
 
-  // Verificando se a célula já foi marcada
-  if (cell.innerHTML !== "") {
-    return;
+  let row1 = prompt('Digite a linha (1, 2 ou 3)');
+  let row = parseInt(row1)
+  let col1 = prompt('Digite a coluna (1, 2 ou 3)');
+  let col = parseInt(col1)
+
+  if (isNaN(row) || isNaN(col) || row < 1 || row > 3 || col < 1 || col > 3 || board[row - 1][col - 1] !== ' ') {
+    console.log('Jogada inválida. Tente novamente.');
+    continue;
   }
 
-  cell.innerHTML = currentPlayer;
-  numMoves++;
+  board[row - 1][col - 1] = player; 
 
-  // Verificando se houve um vencedor ou empate
-  if (checkWinner()) {
-    gameStatus = currentPlayer + " venceu!";
-  } else if (numMoves === 9) {
-    gameStatus = "Empate!";
+  if (checkWin()) {
+    console.clear();
+    displayBoard();
+    console.log(`O jogador ${player} venceu!`);
+    gameOver = true;
+  } else if (!board.flat().includes(' ')) {
+    console.clear();
+    displayBoard();
+    console.log('Empate!');
+    gameOver = true;
   } else {
-    changePlayer();
+    switchPlayer();
   }
-
-  // Atualizando o status do jogo
-  statusDisplay.innerHTML = gameStatus;
 }
-
-// Adicionando o evento de clique para cada célula
-cellElements.forEach(cell => {
-  cell.addEventListener("click", cellClickHandler);
-});
-
-// Adicionando o evento de clique para o botão de reset
-resetButton.addEventListener("click", resetGame);
-
-
- 

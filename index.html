@@ -1,107 +1,32 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title>Jogo da Velha</title>
-	<style>
-		body {
-			background-color: #F7D9E3;
-			font-family: Arial, sans-serif;
-			text-align: center;
-		}
+  <head>
+    <title>Jogo da Velha 3x3 em Tons de Cinza</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
 
-		h1 {
-			color: #555;
-			margin-top: 50px;
-		}
-
-		.container {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			flex-direction: column;
-			margin-top: 50px;
-		}
-
-		.board {
-			border: 2px solid #555;
-			display: grid;
-			grid-template-columns: repeat(3, 1fr);
-			grid-template-rows: repeat(3, 1fr);
-			grid-gap: 5px;
-			padding: 5px;
-			margin-bottom: 20px;
-		}
-
-		.square {
-			background-color: #fff;
-			color: #555;
-			font-size: 60px;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			cursor: pointer;
-		}
-
-		.square:hover {
-			background-color: #eee;
-		}
-
-		.x {
-			color: #F06292;
-		}
-
-		.o {
-			color: #64B5F6;
-		}
-
-		.btn {
-			background-color: #555;
-			color: #fff;
-			padding: 10px 20px;
-			border: none;
-			border-radius: 5px;
-			cursor: pointer;
-		}
-
-		.btn:hover {
-			background-color: #333;
-		}
-
-		.score {
-			display: flex;
-			flex-direction: row;
-			justify-content: center;
-			align-items: center;
-			margin-bottom: 20px;
-		}
-
-		.score span {
-			font-size: 24px;
-			font-weight: bold;
-			margin-right: 10px;
-		}
-
-		.score p {
-			font-size: 18px;
-			margin: 0;
-		}
-	</style>
-</head>
-<body>
-    <h1>Jogo da Velha</h1>
-    <div class="game-board">
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
+  </head>
+  <body>
+    <div class="container">
+      <div class="game-board">
+        <div class="row">
+          <div class="cell"></div>
+          <div class="cell"></div>
+          <div class="cell"></div>
+        </div>
+        <div class="row">
+          <div class="cell"></div>
+          <div class="cell"></div>
+          <div class="cell"></div>
+        </div>
+        <div class="row">
+          <div class="cell"></div>
+          <div class="cell"></div>
+          <div class="cell"></div>
+        </div>
+      </div>
     </div>
-    <div class="game-status">X é a sua vez</div>
-    <button class="game-reset">Novo Jogo</button>
     <script src="app.js"></script>
   </body>
 </html>
+
+
