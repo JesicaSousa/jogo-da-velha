@@ -10,7 +10,6 @@
         "html-has-lang": "off"
       }
     ],
-    "button-type": "off",
     "axe/name-role-value": [
       "default",
       {
