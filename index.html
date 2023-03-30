@@ -1,107 +1,39 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title>Jogo da Velha</title>
-	<style>
-		body {
-			background-color: #F7D9E3;
-			font-family: Arial, sans-serif;
-			text-align: center;
-		}
-
-		h1 {
-			color: #555;
-			margin-top: 50px;
-		}
-
-		.container {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			flex-direction: column;
-			margin-top: 50px;
-		}
-
-		.board {
-			border: 2px solid #555;
-			display: grid;
-			grid-template-columns: repeat(3, 1fr);
-			grid-template-rows: repeat(3, 1fr);
-			grid-gap: 5px;
-			padding: 5px;
-			margin-bottom: 20px;
-		}
-
-		.square {
-			background-color: #fff;
-			color: #555;
-			font-size: 60px;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			cursor: pointer;
-		}
-
-		.square:hover {
-			background-color: #eee;
-		}
-
-		.x {
-			color: #F06292;
-		}
-
-		.o {
-			color: #64B5F6;
-		}
-
-		.btn {
-			background-color: #555;
-			color: #fff;
-			padding: 10px 20px;
-			border: none;
-			border-radius: 5px;
-			cursor: pointer;
-		}
-
-		.btn:hover {
-			background-color: #333;
-		}
-
-		.score {
-			display: flex;
-			flex-direction: row;
-			justify-content: center;
-			align-items: center;
-			margin-bottom: 20px;
-		}
-
-		.score span {
-			font-size: 24px;
-			font-weight: bold;
-			margin-right: 10px;
-		}
-
-		.score p {
-			font-size: 18px;
-			margin: 0;
-		}
-	</style>
-</head>
-<body>
-    <h1>Jogo da Velha</h1>
-    <div class="game-board">
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
+  <head>
+    <meta charset="UTF-8">
+    <title>Jogo da Velha</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+      button {
+        font-size: 50px;
+        height: 100px;
+        width: 100px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container col-md-6 mt-4">
+      <h1>Jogo da velha </h1>
+    <div id="gameboard" class="mb-2 ">
+      <button id="0"></button>
+      <button id="1"></button>
+      <button id="2"></button>
+      <br>
+      <button id="3"></button>
+      <button id="4"></button>
+      <button id="5"></button>
+      <br>
+      <button id="6"></button>
+      <button id="7"></button>
+      <button id="8"></button>
     </div>
-    <div class="game-status">X é a sua vez</div>
-    <button class="game-reset">Novo Jogo</button>
+    <br>
+    <button id="reset" class="btn text-center m-6 btn-lg col-4 btn-success">Reiniciar Jogo</button>
+  </div>
     <script src="app.js"></script>
   </body>
 </html>
+
+
+
